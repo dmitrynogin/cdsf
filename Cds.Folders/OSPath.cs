@@ -17,8 +17,8 @@ namespace Cds.Folders
             Text = text.Trim();
         }
 
-        public static implicit operator OSPath(string text) => new OSPath(text);
-        public static implicit operator string(OSPath path) => path.Normalized;
+        public static implicit operator OSPath(string text) => text == null ? null : new OSPath(text);
+        public static implicit operator string(OSPath path) => path?.Normalized;
         public override string ToString() => Normalized;
 
         protected string Text { get; }
@@ -30,11 +30,10 @@ namespace Cds.Folders
         public OSPath Relative => Simplified.Text.TrimStart('/', '\\');
         public OSPath Absolute => IsAbsolute ? this : "/" + Relative;
 
-        public bool IsAbsolute => IsPathRooted(Text);
-        public bool HasVolume => IsAbsolute && Text[1] == ':';
-        public OSPath Simplified => HasVolume
-            ? (this - GetPathRoot(Text)).Absolute
-            : this;
+        public bool IsAbsolute => IsRooted || HasVolume;
+        public bool IsRooted => Text.Length >= 1 && (Text[0] == '/' || Text[0] == '\\');
+        public bool HasVolume => Text.Length >= 2 && Text[1] == ':';
+        public OSPath Simplified => HasVolume ? Text.Substring(2) : Text;
 
         public OSPath Parent => GetDirectoryName(Text);
 
