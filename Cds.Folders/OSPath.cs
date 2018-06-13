@@ -23,16 +23,16 @@ namespace Cds.Folders
 
         public string Normalized => IsWindows ? Windows : Unix;
         public string Windows => Path.Replace('/', '\\');
-        public string Unix => Rootless.Path.Replace('\\', '/');
+        public string Unix => Volumeless.Path.Replace('\\', '/');
 
-        public OSPath Relative => Rootless.Path.TrimStart('/', '\\');
+        public OSPath Relative => Volumeless.Path.TrimStart('/', '\\');
         public OSPath Absolute => "/" + Relative;
 
-        public bool IsAbsolute => IsRooted || Unix.StartsWith("/");
-        public bool IsRooted => IsPathRooted(Path);
-        public OSPath Rootless => IsRooted
-            ? "/" + Path.Substring(GetPathRoot(Path).Length)
-            : Path;
+        public bool IsAbsolute => IsPathRooted(Path);
+        public bool HasVolume => IsAbsolute && Path[1] == ':';
+        public OSPath Volumeless => HasVolume
+            ? (this - GetPathRoot(Path)).Absolute
+            : this;
 
         public OSPath Parent => GetDirectoryName(Path);
 
