@@ -27,9 +27,9 @@ namespace Cds.Folders.Tests
 
             Assert.IsTrue(path.IsAbsolute);
             Assert.IsTrue(path.HasVolume);
-            Assert.IsFalse(path.Volumeless.HasVolume);
-            Assert.IsTrue(path.Volumeless.IsAbsolute);            
-            Assert.AreEqual("\\foo bar\\file.txt", path.Volumeless.Windows);
+            Assert.IsFalse(path.Simplified.HasVolume);
+            Assert.IsTrue(path.Simplified.IsAbsolute);            
+            Assert.AreEqual("\\foo bar\\file.txt", path.Simplified.Windows);
 
             Assert.AreEqual("c:\\foo bar\\file.txt", path.Windows);
             Assert.AreEqual("/foo bar/file.txt", path.Unix);
@@ -56,7 +56,7 @@ namespace Cds.Folders.Tests
             OSPath path = "\\foo bar\\file.txt";
 
             Assert.IsFalse(path.HasVolume);
-            Assert.AreEqual("\\foo bar\\file.txt", path.Volumeless.Windows);
+            Assert.AreEqual("\\foo bar\\file.txt", path.Simplified.Windows);
 
             Assert.AreEqual("\\foo bar\\file.txt", path.Windows);
             Assert.AreEqual("/foo bar/file.txt", path.Unix);
@@ -82,7 +82,7 @@ namespace Cds.Folders.Tests
         {
             OSPath path = "/foo bar/file.txt";
 
-            Assert.AreEqual("\\foo bar\\file.txt", path.Volumeless.Windows);
+            Assert.AreEqual("\\foo bar\\file.txt", path.Simplified.Windows);
 
             Assert.AreEqual("\\foo bar\\file.txt", path.Windows);
             Assert.AreEqual("/foo bar/file.txt", path.Unix);

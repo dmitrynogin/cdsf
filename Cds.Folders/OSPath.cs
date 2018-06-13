@@ -12,31 +12,31 @@ namespace Cds.Folders
 
         public static bool IsWindows => DirectorySeparatorChar == '\\';
 
-        public OSPath(string path)
+        public OSPath(string text)
         {
-            Path = path.Trim();
+            Text = text.Trim();
         }
 
-        public static implicit operator OSPath(string path) => new OSPath(path);
+        public static implicit operator OSPath(string text) => new OSPath(text);
         public static implicit operator string(OSPath path) => path.Normalized;
         public override string ToString() => Normalized;
 
-        protected string Path { get; }
+        protected string Text { get; }
 
         public string Normalized => IsWindows ? Windows : Unix;
-        public string Windows => Path.Replace('/', '\\');
-        public string Unix => Volumeless.Path.Replace('\\', '/');
+        public string Windows => Text.Replace('/', '\\');
+        public string Unix => Simplified.Text.Replace('\\', '/');
 
-        public OSPath Relative => Volumeless.Path.TrimStart('/', '\\');
+        public OSPath Relative => Simplified.Text.TrimStart('/', '\\');
         public OSPath Absolute => IsAbsolute ? this : "/" + Relative;
 
-        public bool IsAbsolute => IsPathRooted(Path);
-        public bool HasVolume => IsAbsolute && Path[1] == ':';
-        public OSPath Volumeless => HasVolume
-            ? (this - GetPathRoot(Path)).Absolute
+        public bool IsAbsolute => IsPathRooted(Text);
+        public bool HasVolume => IsAbsolute && Text[1] == ':';
+        public OSPath Simplified => HasVolume
+            ? (this - GetPathRoot(Text)).Absolute
             : this;
 
-        public OSPath Parent => GetDirectoryName(Path);
+        public OSPath Parent => GetDirectoryName(Text);
 
         public bool Contains(OSPath path) =>
             Normalized.StartsWith(path);
