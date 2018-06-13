@@ -8,6 +8,19 @@ namespace Cds.Folders.Tests
     public class OSPath_Should
     {
         [TestMethod]
+        public void Unify_Via_Casting()
+        {
+            string p1 = (OSPath)"\\foo bar\\file.txt";
+            string p2 = (OSPath)"/foo bar/file.txt";
+            string expected = OSPath.IsWindows 
+                ? "\\foo bar\\file.txt" 
+                : "/foo bar/file.txt";
+
+            Assert.AreEqual(expected, p1);
+            Assert.AreEqual(expected, p2);
+        }
+
+        [TestMethod]
         public void Unify_Rooted_Windows_Path()
         {
             OSPath path = "c:\\foo bar\\file.txt";
