@@ -7,7 +7,12 @@ namespace Cds.Folders
 {
     public class Folder : FolderEntry
     {
-        public Folder(OSPath fullPath, string root = "") 
+        public Folder(OSPath fullPath)
+            : this(fullPath, OSPath.Empty)
+        {
+        }
+
+        public Folder(OSPath fullPath, OSPath root) 
             : base(fullPath, root)
         {
         }

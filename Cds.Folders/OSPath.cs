@@ -8,6 +8,8 @@ namespace Cds.Folders
 {
     public class OSPath
     {
+        public static readonly OSPath Empty = "";
+
         public static bool IsWindows => DirectorySeparatorChar == '\\';
 
         public OSPath(string path)
