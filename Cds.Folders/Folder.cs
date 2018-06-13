@@ -22,5 +22,8 @@ namespace Cds.Folders
 
         public void Create() =>
             Directory.CreateDirectory(FullPath.Normalized);
+
+        public FolderFile File(OSPath path) =>
+            new FolderFile(FullPath + path, Root);
     }
 }
