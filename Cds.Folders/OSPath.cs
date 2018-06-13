@@ -26,7 +26,7 @@ namespace Cds.Folders
         public string Unix => Volumeless.Path.Replace('\\', '/');
 
         public OSPath Relative => Volumeless.Path.TrimStart('/', '\\');
-        public OSPath Absolute => "/" + Relative;
+        public OSPath Absolute => IsAbsolute ? this : "/" + Relative;
 
         public bool IsAbsolute => IsPathRooted(Path);
         public bool HasVolume => IsAbsolute && Path[1] == ':';
@@ -37,7 +37,7 @@ namespace Cds.Folders
         public OSPath Parent => GetDirectoryName(Path);
 
         public bool Contains(OSPath path) =>
-            Normalized.Contains(path);
+            Normalized.StartsWith(path);
 
         public static OSPath operator +(OSPath left, OSPath right) =>
             new OSPath(Combine(left, right.Relative));

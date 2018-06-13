@@ -43,10 +43,10 @@ namespace Cds.Folders.Tests
                 OSPath.IsWindows ? "foo bar\\file.txt" : "foo bar/file.txt",
                 path.Relative.Normalized);
 
-            Assert.AreEqual("\\foo bar\\file.txt", path.Absolute.Windows);
+            Assert.AreEqual("c:\\foo bar\\file.txt", path.Absolute.Windows);
             Assert.AreEqual("/foo bar/file.txt", path.Absolute.Unix);
             Assert.AreEqual(
-                OSPath.IsWindows ? "\\foo bar\\file.txt" : "/foo bar/file.txt",
+                OSPath.IsWindows ? "c:\\foo bar\\file.txt" : "/foo bar/file.txt",
                 path.Absolute.Normalized);
         }
 
