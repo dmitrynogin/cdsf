@@ -17,5 +17,13 @@ namespace Cds.Folders.Tests
             Assert.AreEqual("/foo/dir", dir.FullPath.Unix);
             Assert.AreEqual("dir", dir.Path.Unix);
         }
+
+        [TestMethod]
+        public void Check_Existence()
+        {
+            var folder = new Folder("/");
+            Assert.IsTrue(folder.Exists);
+            Assert.IsFalse(folder.Down("No Such Thing").Exists);
+        }
     }
 }

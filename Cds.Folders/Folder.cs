@@ -25,8 +25,11 @@ namespace Cds.Folders
         public Folder Up() =>
             new Folder(FullPath.Parent, Root);
 
+        public bool Exists =>
+            Directory.Exists(FullPath);
+
         public void Create() =>
-            Directory.CreateDirectory(FullPath.Normalized);
+            Directory.CreateDirectory(FullPath);
 
         public FolderFile File(OSPath path) =>
             new FolderFile(FullPath + path, Root);
