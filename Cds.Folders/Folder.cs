@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System.Reflection;
+using static System.IO.Path;
 
 namespace Cds.Folders
 {
     public class Folder : FolderEntry
     {
+        public static Folder OfAssembly<T>() =>
+            OfAssembly(typeof(T).Assembly);
+
+        public static Folder OfAssembly(Assembly assembly) =>
+            new Folder(GetDirectoryName(assembly.Location));
+
         public Folder(OSPath fullPath)
             : this(fullPath, OSPath.Empty)
         {

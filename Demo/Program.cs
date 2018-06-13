@@ -8,8 +8,24 @@ namespace Demo
     {
         static void Main(string[] args)
         {
+            PathDemo();
+            FolderDemo();
+        }
+
+        private static void FolderDemo()
+        {
+            var folder = Folder.OfAssembly<Program>()
+                .AsRoot()
+                .Down("Test");
+
+            WriteLine(folder.FullPath);
+            WriteLine(folder.Path);
+        }
+
+        static void PathDemo()
+        {
             OSPath path = @"/foo\bar.txt";
-            
+
             // Windows output
             WriteLine(path);            // \foo\bar.txt
             WriteLine(path.Windows);    // \foo\bar.txt
